@@ -1,0 +1,13 @@
+Input {
+Display: none;
+}
+Label {
+Height:  100px;
+Width: 150px;
+border-radius: 60px;
+Border: 1px dashed #999;
+}
+Label:hover {
+Color: #de0611;
+Border: 1px dashed #de0611;
+}
