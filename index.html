@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<body>
+    <h2>Indikaattori Laskuri</h2>
+    <input type="number" id="numberInput" placeholder="Syötä luku">
+    <button onclick="addNumber()">Lisää luku</button>
+    <button onclick="updateChart()">Päivitä Kaavio</button>
+    <p>Syötetyt luvut: <span id="numbersList"></span></p>
+    <canvas id="pieChart"></canvas>
+    <input type="file" id="file" />
+
+    <script>
+        let numbers = [];
+        let chart;
+
+        function addNumber() {
+            const input = document.getElementById("numberInput");
+            const value = parseFloat(input.value);
+            if (!isNaN(value)) {
+                numbers.push(value);
+                document.getElementById("numbersList").innerText = numbers.join(", ");
+                input.value = "";
+            }
+        }
+
+        function updateChart() {
+            if (numbers.length === 0) {
+                alert("Syötä ainakin yksi luku.");
+                return;
+            }
+
+            const ctx = document.getElementById("pieChart").getContext("2d");
+            if (chart) {
+                chart.destroy();
+            }
+            chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: numbers.map((_, i) => `Luku ${i + 1}`),
+                    datasets: [{
+                        data: numbers,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
